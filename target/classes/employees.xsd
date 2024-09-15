@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://stuti.com/employee/gen" targetNamespace="http://stuti.com/employee/gen"  elementFormDefault="qualified">
+
+    <!-- Employee request element -->
+    <xs:element name="employeeServiceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:employee"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Define Employee Type -->
+    <xs:complexType name="employee">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+            <xs:element name="department" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Employee Response element -->
+    <xs:element name="employeeServiceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="employeeId" type="xs:string"/>
+                <xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

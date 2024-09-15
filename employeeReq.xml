@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://stuti.com/employee/gen">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:employeeServiceRequest>
+            <gs:employee>
+                <gs:name>John Doe</gs:name>
+                <gs:address>123 Main St, Springfield</gs:address>
+                <gs:department>Engineering</gs:department>
+            </gs:employee>
+        </gs:employeeServiceRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
