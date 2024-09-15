@@ -10,7 +10,9 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Endpoint
 public class EmployeeServiceImpl {
@@ -18,6 +20,7 @@ public class EmployeeServiceImpl {
     public static final String NAMESPACE_URI="http://stuti.com/employee/gen";
     // In-memory map to store employee data
     private static Map<String, Employee> employeeStorage = new HashMap<>();
+    private static Set<EmployeeExtend> employeeSet= new HashSet<>();
     private static Integer counter=0;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "employeeServiceRequest")
@@ -26,10 +29,17 @@ public class EmployeeServiceImpl {
         Employee employee=employeeServiceRequest.getEmployee();
         EmployeeServiceResponse employeeServiceResponse=new EmployeeServiceResponse();
 
-        if (employee.getName() == null || employee.getId() == null || employee.getAddress() == null) {
+        if (employee.getName() == null || employee.getAddress() == null) {
             employeeServiceResponse.setStatus("Failed: Missing required employee details.");
             return employeeServiceResponse;
         }
+        EmployeeExtend employeeExtend=new EmployeeExtend(employee);
+
+        if (employeeSet.contains(employeeExtend)){
+            employeeServiceResponse.setStatus("Employee already exists");
+            return employeeServiceResponse;
+        }
+
         counter++;
         employee.setId(String.valueOf(counter));
         // Check if employee ID already exists
@@ -40,6 +50,7 @@ public class EmployeeServiceImpl {
 
         // Store employee in local memory
         employeeStorage.put(employee.getId(), employee);
+        employeeSet.add(employeeExtend);
         employeeServiceResponse.setStatus("Employee " + employee.getName() + " with ID " + employee.getId() + " created successfully.");
         return employeeServiceResponse;
     }
